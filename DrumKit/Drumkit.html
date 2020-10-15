@@ -60,8 +60,25 @@
       //Inside the parameters we put in the type of event, we will be using keydown to listen for keystrokes.
       // function(event) is a function used so the function reacts when the event (keydown is pressed).
       window.addEventListener("keydown", function(event) {
-        console.log(event.keyCode);
+        // document.querySelector to select one data-key
+        // $e.keyCode is used as e is event
+        const audio = document.querySelector(
+          `audio[data-key="${event.keyCode}"]`
+        );
+        //stores what key is chosen
+        const key = document.querySelector(`.key[data-key="${event.keyCode}"]`);
+
+        key.classList.add("playing");
+        // key.classList.toggle("playing");
+        // key.classList.remove("playing");
+
+        if (!audio) return; //if no keymap to audio, stop function
+        audio.currentTime = 0;
+        audio.play();
+        // console.log(audio); shows <audio data-key=""> </audio>
       });
+
+      const keys = document.querySelectorAll(".key");
     </script>
   </body>
 </html>

@@ -4,8 +4,14 @@
     <meta charset="UTF-8" />
     <title>JS Drum Kit</title>
     <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://kit.fontawesome.com/34f56d6676.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
+    <i class="fab fa-js"></i>
+    <div class="title">JS Soundboard</div>
     <div class="keys">
       <div data-key="65" class="key">
         <kbd>A</kbd>
@@ -56,29 +62,39 @@
     <audio data-key="76" src="sounds/tink.wav"></audio>
 
     <script>
-      //First we are going to listen for keystrokes so we will need 'window.addEventListener()'
-      //Inside the parameters we put in the type of event, we will be using keydown to listen for keystrokes.
       // function(event) is a function used so the function reacts when the event (keydown is pressed).
-      window.addEventListener("keydown", function(event) {
-        // document.querySelector to select one data-key
-        // $e.keyCode is used as e is event
+      function playSound(event) {
+        // document.querySelector to select one data-key  // audio stores the keyCode that has been pressed ("keydown")
         const audio = document.querySelector(
           `audio[data-key="${event.keyCode}"]`
         );
-        //stores what key is chosen
-        const key = document.querySelector(`.key[data-key="${event.keyCode}"]`);
+
+        const key = document.querySelector(`.key[data-key="${event.keyCode}"]`); // key stores which div was highlighted on keydown
+
+        if (!audio) return; //if keymap has no audio, stop function
+        audio.currentTime = 0; // restarts time of sound for multiple pressing
+        audio.play();
 
         key.classList.add("playing");
         // key.classList.toggle("playing");
         // key.classList.remove("playing");
-
-        if (!audio) return; //if no keymap to audio, stop function
-        audio.currentTime = 0;
-        audio.play();
         // console.log(audio); shows <audio data-key=""> </audio>
-      });
+      }
+
+      function removeTransition(event) {
+        if (event.propertyName !== "transform") return; //skip everything thats not the transform
+        this.classList.remove("playing");
+      }
 
       const keys = document.querySelectorAll(".key");
+      //keys stores all the keydown options available
+      keys.forEach(key =>
+        key.addEventListener("transitionend", removeTransition)
+      ); // using forEach as array cannot take eventListener
+
+      // We will need 'window.addEventListener()' to listen to keystrokes
+      // Inside the parameters we put in the type of event "keydown", playSound is used to call the keydown function
+      window.addEventListener("keydown", playSound);
     </script>
   </body>
 </html>

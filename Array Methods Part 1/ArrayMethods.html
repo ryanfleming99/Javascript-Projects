@@ -95,16 +95,25 @@
 
       // Using backticks for interpolation
       const fullNamesRefined = inventors.map(
-        inventors => `${inventors.last} + ${inventors.last}`
+        inventors => `${inventors.first} + ${inventors.last}`
       );
 
       // ____________________________________________________________
 
       // Array.prototype.sort()
       // 3. Sort the inventors by birthdate, oldest to youngest
+      const birthDate = inventors.map(inventors => `${inventors.year}`).sort();
 
       // Array.prototype.reduce()
       // 4. How many years did all the inventors live?
+      const lifeLength = inventors.sort(function(person1, person2) {
+        if (person1.year > person2.year) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      console.table(lifeLength);
 
       // 5. Sort the inventors by years lived
 

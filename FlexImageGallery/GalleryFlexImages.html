@@ -87,7 +87,7 @@
       }
 
       .panel.open-active > *:first-child {
-        transform: translateY(100%);
+        transform: translateY(0);
       }
 
       .panel > *:last-child {
@@ -151,7 +151,7 @@
       }
 
       function toggleActive(e) {
-        if (e.property.includes("flex")) {
+        if (e.propertyName.includes("flex")) {
           this.classList.toggle("open-active");
         }
       }
